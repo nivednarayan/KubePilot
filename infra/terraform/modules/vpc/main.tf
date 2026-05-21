@@ -1,3 +1,4 @@
+# main vpx
 resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
@@ -8,6 +9,7 @@ resource "aws_vpc" "main" {
   }
 }
 
+# public subnet creation on 2 availability zones
 resource "aws_subnet" "public-subnet-1" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
@@ -32,6 +34,7 @@ resource "aws_subnet" "public-subnet-2" {
   }
 }
 
+# private subnet creation on 2 availability zones
 resource "aws_subnet" "private-subnet-1" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.3.0/24"
@@ -54,6 +57,7 @@ resource "aws_subnet" "private-subnet-2" {
   }
 }
 
+# main internet gateway
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
@@ -62,6 +66,7 @@ resource "aws_internet_gateway" "main" {
   }
 }
 
+# elastic IP for NAT gateway
 resource "aws_eip" "nat" {
   domain = "vpc"
 
@@ -70,6 +75,7 @@ resource "aws_eip" "nat" {
   }
 }
 
+# NAT gateway in public subnet
 resource "aws_nat_gateway" "main" {
   allocation_id = aws_eip.nat.id
   subnet_id     = aws_subnet.public-subnet-1.id
@@ -81,6 +87,7 @@ resource "aws_nat_gateway" "main" {
   depends_on = [aws_internet_gateway.main]
 }
 
+# Route tables
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.main.id
 
