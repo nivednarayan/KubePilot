@@ -1,3 +1,4 @@
+# EKS Cluster IAM Role
 resource "aws_iam_role" "eks_cluster" {
   name = "${var.project_name}-eks-cluster-role"
 
@@ -13,11 +14,13 @@ resource "aws_iam_role" "eks_cluster" {
   })
 }
 
+# Attach the AmazonEKSClusterPolicy to the EKS cluster role
 resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
   role = aws_iam_role.eks_cluster.name
 }
 
+# Create the EKS cluster
 resource "aws_eks_cluster" "main" {
   name = "${var.project_name}-cluster"
   role_arn = aws_iam_role.eks_cluster.arn
@@ -34,6 +37,7 @@ resource "aws_eks_cluster" "main" {
   ]
 }
 
+# EKS Node Group IAM Role
 resource "aws_iam_role" "eks_nodes" {
   name = "${var.project_name}-eks-node-role"
 
@@ -49,6 +53,7 @@ resource "aws_iam_role" "eks_nodes" {
   })
 }
 
+# Attach necessary policies to the EKS node role
 resource "aws_iam_role_policy_attachment" "eks_worker_node_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
   role = aws_iam_role.eks_nodes.name
@@ -64,6 +69,7 @@ resource "aws_iam_role_policy_attachment" "eks_ecr_policy" {
   role = aws_iam_role.eks_nodes.name
 }
 
+# Create the OIDC provider for the EKS cluster
 data "tls_certificate" "eks" {
   url = aws_eks_cluster.main.identity[0].oidc[0].issuer
 }
@@ -74,13 +80,14 @@ resource "aws_iam_openid_connect_provider" "eks" {
   url = aws_eks_cluster.main.identity[0].oidc[0].issuer
 }
 
+# Create the EKS node group
 resource "aws_eks_node_group" "main" {
   cluster_name    = aws_eks_cluster.main.name
   node_group_name = "${var.project_name}-nodes"
   node_role_arn   = aws_iam_role.eks_nodes.arn
   subnet_ids      = var.private_subnet_ids
 
-  instance_types = ["t3.medium"]
+  instance_types = ["t3.small"]
 
   scaling_config {
     desired_size = 2
