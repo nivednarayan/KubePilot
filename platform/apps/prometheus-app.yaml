@@ -15,7 +15,7 @@ spec:
       valuesObject:
         grafana:
           enabled: true
-          adminPassword: "kubepilotadmin"
+          adminPassword: "kubepilot123"
         prometheus:
           prometheusSpec:
             retention: 24h
@@ -41,3 +41,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+      - ServerSideApply=true
