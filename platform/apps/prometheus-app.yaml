@@ -16,6 +16,12 @@ spec:
         grafana:
           enabled: true
           adminPassword: "kubepilot123"
+          additionalDataSources:
+            - name: Loki
+              type: loki
+              url: http://loki.monitoring:3100
+              access: proxy
+              isDefault: false
         prometheus:
           prometheusSpec:
             retention: 24h
