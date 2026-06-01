@@ -17,6 +17,14 @@ spec:
           - resources:
               kinds:
                 - Pod
+      exclude:
+         any:
+           - resources:
+               namespaces:
+                  - monitoring
+                  - kyverno
+                  - argocd
+                  - kube-system
       validate:
         message: "Running as root is not allowed. Set runAsNonRoot: true in your securityContext."
         pattern:

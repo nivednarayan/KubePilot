@@ -19,6 +19,14 @@ spec:
                 - Pod
               namespaces:
                 - default
+       exclude:
+         any:
+           - resources:
+               namespaces:
+                  - monitoring
+                  - kyverno
+                  - argocd
+                  - kube-system
       validate:
         message: "Pod must have an 'app' label."
         pattern:
