@@ -19,9 +19,9 @@ spec:
                 - Pod
               namespaces:
                 - default
-       exclude:
-         any:
-           - resources:
+      exclude:
+        any:
+          - resources:
                namespaces:
                   - monitoring
                   - kyverno
