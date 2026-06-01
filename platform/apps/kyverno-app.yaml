@@ -46,6 +46,17 @@ spec:
             limits:
               memory: 128Mi
               cpu: 100m
+        cleanupJobs:
+          admissionReports:
+            enabled: false
+          clusterAdmissionReports:
+            enabled: false
+          ephemeralReports:
+            enabled: false
+          clusterEphemeralReports:
+            enabled: false
+          updateRequests:
+            enabled: false
   destination:
     server: https://kubernetes.default.svc
     namespace: kyverno

@@ -19,7 +19,7 @@ spec:
         - name: demo-app
           image: nginxinc/nginx-unprivileged:alpine
           ports:
-            - containerPort: 80
+            - containerPort: 8080
           securityContext:
             runAsNonRoot: true
             runAsUser: 101
@@ -33,10 +33,10 @@ spec:
           livenessProbe:
             httpGet:
               path: /
-              port: 80
+              port: 8080
             periodSeconds: 10
           readinessProbe:
             httpGet:
               path: /
-              port: 80
+              port: 8080
             periodSeconds: 5
