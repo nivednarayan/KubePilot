@@ -16,14 +16,14 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
-          terraform_version: 1.6.0
+          terraform_version: 1.11.0
 
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
         working-directory: infra/terraform
 
       - name: Terraform Init
-        run: terraform init -backend=false
+        run: terraform init -backend=false -upgrade
         working-directory: infra/terraform
 
       - name: Terraform Validate
