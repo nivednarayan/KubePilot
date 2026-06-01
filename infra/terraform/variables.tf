@@ -10,9 +10,3 @@ variable "project_name" {
   type        = string
   default     = "kube-pilot"
 }
-
-variable "environment" {
-  description = "Environment name"
-  type        = string
-  default     = "dev"
-} # test comment

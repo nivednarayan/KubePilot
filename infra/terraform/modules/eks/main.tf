@@ -1,3 +1,15 @@
+terraform {
+  required_version = ">= 1.6"
+  required_providers {
+    aws = {
+      source = "hashicorp/aws"
+    }
+    tls = {
+      source = "hashicorp/tls"
+    }
+  }
+}
+
 # EKS Cluster IAM Role
 resource "aws_iam_role" "eks_cluster" {
   name = "${var.project_name}-eks-cluster-role"
