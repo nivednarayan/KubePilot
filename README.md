@@ -168,24 +168,7 @@ Running 4 hours/day with daily destroy:
   the pod level only
 - cert-manager and External DNS configured but require a 
   domain name
-
-## What I Learned
-
-Building KubePilot taught me that you can't build anything serious 
-without hitting errors — and the skill that matters most is 
-debugging, not writing code. Every week had at least one problem 
-that took hours to solve: IAM permissions that weren't obvious, 
-CRDs too large for client-side apply, Kyverno policies blocking 
-my own monitoring stack. Each one taught me something I wouldn't 
-have learned from a tutorial.
-
-The other big lesson: production infrastructure is about 
-constraints and tradeoffs, not just getting things running. 
-Adding Kyverno security policies immediately broke Prometheus. 
-The fix wasn't to remove the policies — it was to understand 
-why system namespaces needed to be excluded and update the 
-policies correctly.
-
+  
 ## Author
 
 Nived Narayan — B.Tech CSE (AI & DS), IIIT Kottayam (2024-2028)
